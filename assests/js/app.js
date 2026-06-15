@@ -41,9 +41,13 @@ function fetchcomments(){
         }
 
 
+     spinner.classList.add('d-none')
 
 
     }
+
+    spinner.classList.add('d-none')
+
 }
 fetchcomments()
 
@@ -67,7 +71,6 @@ function commentCards(arr){
 				</div>`
     });
     commentcontainer.innerHTML =result;
-    spinner.classList.add('d-none')
 
 }
 
@@ -103,6 +106,7 @@ function onsubmitHandalar (ele){
 
 
     }
+    spinner.classList.add('d-none')
 
 }
 
@@ -172,6 +176,7 @@ function Onedit(ele){
       spinner.classList.add('d-none')
 
     }
+    spinner.classList.add('d-none')
 
 
 
@@ -198,7 +203,7 @@ function onupdatehandl(){
 
     xhr.open('PUT',updateUrl)
 
-    xhr.send(updateObj)
+    xhr.send(JSON.stringify(updateObj))
 
     xhr.onload = function (){
         if(xhr.status >= 200 && xhr.status <= 299){
@@ -230,43 +235,54 @@ function onupdatehandl(){
         spinner.classList.add('d-none')
     }
 
+    spinner.classList.add('d-none')
 
 }
 
 
 function Onremove(ele){
-        spinner.classList.remove('d-none')
+    spinner.classList.remove('d-none')
 
-    let removeId = ele.closest('.col-md-4').id
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+                    
+            let removeId = ele.closest('.col-md-4').id
 
-    let removeUrl = `${Base_Url}/${removeId}`
+            let removeUrl = `${Base_Url}/${removeId}`
 
-    let xhr = new XMLHttpRequest()
+            let xhr = new XMLHttpRequest()
 
-    xhr.open('DELETE',removeUrl)
+            xhr.open('DELETE',removeUrl)
 
-    xhr.send(null)
+            xhr.send(null)
 
-    xhr.onload = function (){
-        if(xhr.status >= 200 && xhr.status <= 299){
+            xhr.onload = function (){
+                if(xhr.status >= 200 && xhr.status <= 299){
 
 
-            ele.closest('.col-md-4').remove()
+                    ele.closest('.col-md-4').remove()
 
-            snackbar(`The Comment Id ${removeId} is Removed Successfully!!`,'success')
+                    snackbar(`The Comment Id ${removeId} is Removed Successfully!!`,'success')
 
-            
-        }else{
-            snackbar(xhr)
+                    
+                }else{
+                    snackbar(xhr)
+                }
+                spinner.classList.add('d-none')
+
+            }
         }
+    });
 
-
-
-
-
-        spinner.classList.add('d-none')
-
-    }
+    spinner.classList.add('d-none')
 }
 
 
