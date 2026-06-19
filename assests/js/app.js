@@ -102,7 +102,7 @@ function cratenewcard(newobj,res){
     div.innerHTML =`<div class="card h-100">
 						<div class="card-header bg-primary" data-toggle="tooltip" data-placement="top" title="${newobj.name}">
 							<h2>${newobj.name}</h2>
-							<h3>${newobj.email}</h3>
+							<h3>Email : ${newobj.email}</h3>
 						</div>
 						<div class="card-body">
 							<p>${newobj.body}</p>
@@ -168,7 +168,7 @@ function onupdatehandl(){
             div.innerHTML =`<div class="card h-100">
 						<div class="card-header bg-primary" data-toggle="tooltip" data-placement="top" title="${updateObj.name}">
 							<h2>${updateObj.name}</h2>
-							<h3>${updateObj.email}</h3>
+							<h3>Email : ${updateObj.email}</h3>
 						</div>
 						<div class="card-body">
 							<p>${updateObj.body}</p>
