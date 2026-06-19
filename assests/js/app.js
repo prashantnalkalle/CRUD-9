@@ -27,6 +27,7 @@ function fetchcomments(){
     spinner.classList.remove('d-none')
     let xhr = new XMLHttpRequest()
     xhr.open('GET',Base_Url)
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     xhr.send(null)
     xhr.onload = function (){
         if(xhr.status >= 200 && xhr.status <= 299){
@@ -77,6 +78,7 @@ function onsubmitHandalar (ele){
     }
     let xhr = new XMLHttpRequest()
     xhr.open('POST',Base_Url)
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     xhr.send(JSON.stringify(newobj))
     xhr.onload = function (){
         if(xhr.status >= 200 && xhr.status <= 299){
@@ -94,7 +96,7 @@ function onsubmitHandalar (ele){
 
 function cratenewcard(newobj,res){
     let div = document.createElement('div')
-    div.className = `col-md-4 offset-md-1 my-4`
+    div.className = `col-md-4 my-4`
     div.id = res.id
 
     div.innerHTML =`<div class="card h-100">
@@ -122,6 +124,7 @@ function Onedit(ele){
     let editUrl = `${Base_Url}/${editId}`
     let xhr = new XMLHttpRequest()
     xhr.open('GET',editUrl)
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     xhr.send(null); 
     xhr.onload = function(){
         if(xhr.status >= 200 && xhr.status <= 299){
@@ -157,18 +160,30 @@ function onupdatehandl(){
     let updateUrl = `${Base_Url}/${updateId}`
     let xhr = new XMLHttpRequest()
     xhr.open('PUT',updateUrl)
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     xhr.send(JSON.stringify(updateObj))
     xhr.onload = function (){
         if(xhr.status >= 200 && xhr.status <= 299){
             let div = document.getElementById(updateId)
-            let h2 = div.querySelector('.card-header h2')
-            h2.innerText = updateObj.name
-            let h3 = div.querySelector('.card-header h3')
-            h3.innerText = updateObj.email
-            let p = div.querySelector('.card-body p')
-            p.innerText = updateObj.body
-            snackbar(`The Comment Id ${updateId} is Updated Successfully!! `,'success')
-            commentForm.reset();
+            div.innerHTML =`<div class="card h-100">
+						<div class="card-header bg-primary" data-toggle="tooltip" data-placement="top" title="${updateObj.name}">
+							<h2>${updateObj.name}</h2>
+							<h3>${updateObj.email}</h3>
+						</div>
+						<div class="card-body">
+							<p>${updateObj.body}</p>
+						</div>
+						<div class="card-footer d-flex justify-content-between">
+							<button class="btn btn-sm btn-success " onclick="Onedit(this)">Edit</button>
+							<button class="btn btn-sm btn-danger " onclick="Onremove(this)">Remove</button>
+						</div>
+					</div>`
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+
+
             Addcomment.classList.remove('d-none')
             Updatecomment.classList.add('d-none')
             div.scrollIntoView({
@@ -202,6 +217,7 @@ function Onremove(ele){
             let removeUrl = `${Base_Url}/${removeId}`
             let xhr = new XMLHttpRequest()
             xhr.open('DELETE',removeUrl)
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             xhr.send(null)
             xhr.onload = function (){
                 if(xhr.status >= 200 && xhr.status <= 299){
