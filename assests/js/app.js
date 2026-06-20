@@ -186,6 +186,7 @@ function onupdatehandl(){
 
             Addcomment.classList.remove('d-none')
             Updatecomment.classList.add('d-none')
+            commentForm.reset()
             div.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
